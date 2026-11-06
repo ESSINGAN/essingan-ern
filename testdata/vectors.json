@@ -128,7 +128,13 @@
     {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2*/p-01jf*/instance/*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/database/ldb-01jf4x2n5r8t2y6d", "matches": false, "why": "* does not reach a sub-resource"},
     {"pattern": "ern:essingan:scu:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/capacity/*", "ern": "ern:essingan:scu::482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/capacity/cap-01jeq8t2w4y6a9b3", "matches": true, "why": "* may match an empty location"},
     {"pattern": "ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/project/*", "ern": "ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/project/p-01jf3w9n5r8t2y6b", "matches": true},
-    {"pattern": "ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/*", "ern": "ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/project/p-01jf3w9n5r8t2y6b", "matches": false, "why": "* stays within one path segment"}
+    {"pattern": "ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/*", "ern": "ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/project/p-01jf3w9n5r8t2y6b", "matches": false, "why": "* stays within one path segment"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/database/ldb-01jf4x2n5r8t2y6d", "matches": true, "why": "** covers what lives under the instance"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c", "matches": false, "why": "** needs at least one segment: it covers what is inside, not the instance itself (as a trailing /** in .gitignore)"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/*/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/database/ldb-01jf4x2n5r8t2y6d", "matches": true, "why": "* and ** together: what lives under any instance"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c", "matches": true, "why": "** covers every resource of the project"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jfzzzzzzzzzzzz/instance/db-01jf4x2n5r8t2y6c", "matches": false, "why": "the segments before ** must still match"},
+    {"pattern": "ern:essingan:iam::482019375521:**", "ern": "ern:essingan:iam::482019375521:o-01jd2v8k4m7q9x3a/group/g-01je5k7m9p3r6t8d", "matches": true, "why": "a resource path of ** alone covers every path"}
   ],
   "registry": {
     "providers": ["aws", "azure", "gcp", "scaleway", "ovh", "outscale", "hetzner", "lithos"],
@@ -156,6 +162,10 @@
     {"pattern": "ern:essingan:iam:::policy//SCUBuyer", "why": "empty segment"},
     {"pattern": "ern:essingan:iam:::", "why": "empty resource path"},
     {"pattern": "ern:essingan:iam:::policy/a:b", "why": "a colon in the resource path"},
-    {"pattern": "**", "why": "only a lone * stands for everything"}
+    {"pattern": "**", "why": "only a lone * stands for everything"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/**/instance/db-01jf4x2n5r8t2y6c", "why": "** only as the last segment"},
+    {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-**", "why": "** stands for whole segments, never inside one"},
+    {"pattern": "ern:essingan:**:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/**", "why": "** only in the resource path, never in a component"},
+    {"pattern": "ern:essingan:iam::482019375521:user/**/**", "why": "** only once, as the last segment"}
   ]
 }
