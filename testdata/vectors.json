@@ -127,8 +127,8 @@
     {"ern": "ern:essingan:iam::482019375521:usér/u-01jcz7k2m9q4x8n2", "why": "not ASCII, from essingan-iam #129"},
     {"ern": "ern:essingan:account:::account", "why": "E1 without its account, from essingan-iam #129"},
     {"ern": "ern:essingan:iam:::policy/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "why": "1025 characters: an ERN is at most 1024"},
-    {"ern": "ern:essingan-:account::482019375521:account", "why": "a partition ends with an id after its dash"},
-    {"ern": "ern:essingan-dev-2:account::482019375521:account", "why": "one id after essingan-, without a second dash (D11)"},
+    {"ern": "ern:essingan-:account::482019375521:account", "why": "`essingan-` without an id after the dash"},
+    {"ern": "ern:essingan-dev-2:account::482019375521:account", "why": "the id after `essingan-` is [a-z0-9]+, with no second dash (Ern pattern of the Hub contract v0.1.1)"},
     {"ern": "ern:essingan:iam::482019375521:user/u-01JCZ7K2M9Q4X8N2", "why": "an ERI is lowercase"}
   ],
   "match": [
