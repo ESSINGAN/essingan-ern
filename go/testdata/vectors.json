@@ -139,6 +139,13 @@
       {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8n2", "registered": true, "why": "no location, so no provider to check"}
     ]
   },
+  "eri": [
+    {"prefix": "p", "unix_ms": 1793956800000, "random": 0, "eri": "p-01m6r2gsg0000000", "why": "2026-11-06 09:20:00 UTC"},
+    {"prefix": "o", "unix_ms": 1793956800000, "random": 1073741823, "eri": "o-01m6r2gsg0zzzzzz", "why": "same millisecond, highest random part"},
+    {"prefix": "u", "unix_ms": 1793956800001, "random": 123456789, "eri": "u-01m6r2gsg13nqk8n", "why": "one millisecond later sorts after"},
+    {"prefix": "cap", "unix_ms": 0, "random": 0, "eri": "cap-0000000000000000", "why": "the Unix epoch"},
+    {"prefix": "ldb", "unix_ms": 281474976710655, "random": 1073741823, "eri": "ldb-7zzzzzzzzzzzzzzz", "why": "the 48-bit limit"}
+  ],
   "lifecycle_states": ["PENDING", "CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"],
   "bad_lifecycle_states": ["", "active", "RUNNING", "CREATED", "DELETED "],
   "bad_patterns": [

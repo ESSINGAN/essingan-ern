@@ -48,6 +48,12 @@ type vectors struct {
 			Why        string `json:"why"`
 		} `json:"checks"`
 	} `json:"registry"`
+	ERI []struct {
+		Prefix string `json:"prefix"`
+		UnixMs int64  `json:"unix_ms"`
+		Random uint32 `json:"random"`
+		ERI    string `json:"eri"`
+	} `json:"eri"`
 	LifecycleStates    []string `json:"lifecycle_states"`
 	BadLifecycleStates []string `json:"bad_lifecycle_states"`
 }
