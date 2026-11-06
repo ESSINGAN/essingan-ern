@@ -62,7 +62,8 @@
     {"ern": "ern:essingan:lithos:lithos-s-01jd2v8k4m7q9x3a:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/vm/vm-01jg4x8n5r8t2y6b", "pattern": "E6"},
     {"ern": "ern:essingan-a1b2:iam::482019375521:user/u-01jcz7k2m9q4x8n2", "pattern": "E2"},
     {"ern": "ern:essingan-dev:account::482019375521:account", "pattern": "E1"},
-    {"ern": "ern:essingan-staging:account::482019375521:account", "pattern": "E1"}
+    {"ern": "ern:essingan-staging:account::482019375521:account", "pattern": "E1"},
+    {"ern": "ern:essingan:iam:::policy/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "pattern": "E9"}
   ],
   "parts": [
     {
@@ -124,7 +125,11 @@
     {"ern": "ern:essingan:account::482019375521:organization/acme", "why": "a name in place of the organization ERI, from essingan-iam #129"},
     {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8n2 ", "why": "a trailing space, from essingan-iam #129"},
     {"ern": "ern:essingan:iam::482019375521:usér/u-01jcz7k2m9q4x8n2", "why": "not ASCII, from essingan-iam #129"},
-    {"ern": "ern:essingan:account:::account", "why": "E1 without its account, from essingan-iam #129"}
+    {"ern": "ern:essingan:account:::account", "why": "E1 without its account, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam:::policy/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "why": "1025 characters: an ERN is at most 1024"},
+    {"ern": "ern:essingan-:account::482019375521:account", "why": "`essingan-` without an id after the dash"},
+    {"ern": "ern:essingan-dev-2:account::482019375521:account", "why": "the id after `essingan-` is [a-z0-9]+, with no second dash (Ern pattern of the Hub contract v0.1.1)"},
+    {"ern": "ern:essingan:iam::482019375521:user/u-01JCZ7K2M9Q4X8N2", "why": "an ERI is lowercase"}
   ],
   "match": [
     {"pattern": "*", "ern": "ern:essingan:iam:::policy/SCUBuyer", "matches": true},
@@ -156,7 +161,9 @@
     {"pattern": "ern:essingan:arca:*:*:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y?", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": false, "why": "? is exactly one character, never two, from essingan-iam #129"},
     {"pattern": "ern:essingan:arca:*:999999999999:o-*/p-*/instance/*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": false, "why": "another account, from essingan-iam #129"},
     {"pattern": "ern:essingan:arca:*:482019375521:*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": false, "why": "* in the path is one segment, from essingan-iam #129"},
-    {"pattern": "ern:essingan:*:*:482019375521:o-*/p-*/*/*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": true, "why": "one * per segment, from essingan-iam #129"}
+    {"pattern": "ern:essingan:*:*:482019375521:o-*/p-*/*/*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": true, "why": "one * per segment, from essingan-iam #129"},
+    {"pattern": "ern:essingan:catalogue:::artefact/*", "ern": "ern:essingan:catalogue:::artefact/arca/0.3.0", "matches": false, "why": "* is one segment: it does not cover an E9 path of three"},
+    {"pattern": "ern:essingan:catalogue:::artefact/**", "ern": "ern:essingan:catalogue:::artefact/arca/0.3.0", "matches": true, "why": "** covers every version of every artefact"}
   ],
   "registry": {
     "providers": ["aws", "azure", "gcp", "scaleway", "ovh", "outscale", "hetzner", "lithos"],
@@ -200,6 +207,8 @@
     {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/**/instance/db-01jf4x2n5r8t2y6c", "why": "** only as the last segment"},
     {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-**", "why": "** stands for whole segments, never inside one"},
     {"pattern": "ern:essingan:**:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/**", "why": "** only in the resource path, never in a component"},
-    {"pattern": "ern:essingan:iam::482019375521:user/**/**", "why": "** only once, as the last segment"}
+    {"pattern": "ern:essingan:iam::482019375521:user/**/**", "why": "** only once, as the last segment"},
+    {"pattern": "ern:essingan:iam::482019375521:user/", "why": "a pattern ending with /: empty last segment"},
+    {"pattern": "ern:essingan:iam::482019375521:usér/*", "why": "not ASCII"}
   ]
 }
