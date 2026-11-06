@@ -68,7 +68,7 @@ type vectors struct {
 	BadLifecycleStates []string `json:"bad_lifecycle_states"`
 }
 
-func loadVectors(t *testing.T) vectors {
+func loadVectors(t testing.TB) vectors {
 	t.Helper()
 	data, err := os.ReadFile("../testdata/vectors.json")
 	if err != nil {
