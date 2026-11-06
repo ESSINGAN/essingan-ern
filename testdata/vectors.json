@@ -58,7 +58,11 @@
 
     {"ern": "ern:essingan:sts::482019375521:role-session/Deployer/ci-run-7731", "pattern": "E10"},
     {"ern": "ern:essingan:sts::482019375521:o-01jd2v8k4m7q9x3a/role-session/Deployer/ci-run-7731", "pattern": "E10"},
-    {"ern": "ern:essingan:sts::482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/role-session/Deployer/ci-run-7731", "pattern": "E10"}
+    {"ern": "ern:essingan:sts::482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/role-session/Deployer/ci-run-7731", "pattern": "E10"},
+    {"ern": "ern:essingan:lithos:lithos-s-01jd2v8k4m7q9x3a:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/vm/vm-01jg4x8n5r8t2y6b", "pattern": "E6"},
+    {"ern": "ern:essingan-a1b2:iam::482019375521:user/u-01jcz7k2m9q4x8n2", "pattern": "E2"},
+    {"ern": "ern:essingan-dev:account::482019375521:account", "pattern": "E1"},
+    {"ern": "ern:essingan-staging:account::482019375521:account", "pattern": "E1"}
   ],
   "parts": [
     {
@@ -109,7 +113,18 @@
     {"ern": "ern:essingan:arca::482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/database/ldb-01jf4x2n5r8t2y6d/x/y-01jf4x2n5r8t2y6d", "why": "a sub-resource goes only one level down"},
     {"ern": "ern:essingan:catalogue:::artefact/../0.3.0", "why": "dot segments"},
     {"ern": "ern:essingan:iam:scaleway-fr-par::policy/AdministratorAccess", "why": "a managed object has no location"},
-    {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8é2", "why": "not ASCII"}
+    {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8é2", "why": "not ASCII"},
+    {"ern": "arn:aws:iam::123456789012:user/x", "why": "an AWS ARN, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam::482019375521", "why": "five components, from essingan-iam #129"},
+    {"ern": "ern:other:iam::482019375521:user/u-01jcz7k2m9q4x8n2", "why": "unknown partition, from essingan-iam #129"},
+    {"ern": "ern:essingan:unknown::482019375521:thing/t-01jcz7k2m9q4x8n2", "why": "unknown service, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam::4820193755211:user/u-01jcz7k2m9q4x8n2", "why": "13-digit account, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8n2:x", "why": "a colon in the resource path, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam::482019375521:user", "why": "a type without an id, from essingan-iam #129"},
+    {"ern": "ern:essingan:account::482019375521:organization/acme", "why": "a name in place of the organization ERI, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8n2 ", "why": "a trailing space, from essingan-iam #129"},
+    {"ern": "ern:essingan:iam::482019375521:usér/u-01jcz7k2m9q4x8n2", "why": "not ASCII, from essingan-iam #129"},
+    {"ern": "ern:essingan:account:::account", "why": "E1 without its account, from essingan-iam #129"}
   ],
   "match": [
     {"pattern": "*", "ern": "ern:essingan:iam:::policy/SCUBuyer", "matches": true},
@@ -134,7 +149,14 @@
     {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/*/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c/database/ldb-01jf4x2n5r8t2y6d", "matches": true, "why": "* and ** together: what lives under any instance"},
     {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c", "matches": true, "why": "** covers every resource of the project"},
     {"pattern": "ern:essingan:arca:*:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/**", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jfzzzzzzzzzzzz/instance/db-01jf4x2n5r8t2y6c", "matches": false, "why": "the segments before ** must still match"},
-    {"pattern": "ern:essingan:iam::482019375521:**", "ern": "ern:essingan:iam::482019375521:o-01jd2v8k4m7q9x3a/group/g-01je5k7m9p3r6t8d", "matches": true, "why": "a resource path of ** alone covers every path"}
+    {"pattern": "ern:essingan:iam::482019375521:**", "ern": "ern:essingan:iam::482019375521:o-01jd2v8k4m7q9x3a/group/g-01je5k7m9p3r6t8d", "matches": true, "why": "a resource path of ** alone covers every path"},
+    {"pattern": "*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": true, "why": "a lone * covers every ERN"},
+    {"pattern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": true, "why": "no wildcard: the exact ERN"},
+    {"pattern": "ern:essingan:arca:*:*:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6?", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": true, "why": "? is one character, from essingan-iam #129"},
+    {"pattern": "ern:essingan:arca:*:*:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y?", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": false, "why": "? is exactly one character, never two, from essingan-iam #129"},
+    {"pattern": "ern:essingan:arca:*:999999999999:o-*/p-*/instance/*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": false, "why": "another account, from essingan-iam #129"},
+    {"pattern": "ern:essingan:arca:*:482019375521:*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": false, "why": "* in the path is one segment, from essingan-iam #129"},
+    {"pattern": "ern:essingan:*:*:482019375521:o-*/p-*/*/*", "ern": "ern:essingan:arca:scaleway-fr-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "matches": true, "why": "one * per segment, from essingan-iam #129"}
   ],
   "registry": {
     "providers": ["aws", "azure", "gcp", "scaleway", "ovh", "outscale", "hetzner", "lithos"],
@@ -142,6 +164,7 @@
       {"ern": "ern:essingan:arca:hetzner-fsn1:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c", "registered": true},
       {"ern": "ern:essingan:arca:lithos-s-01jf4x2n5r8t2y6d:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c", "registered": true},
       {"ern": "ern:essingan:arca:proxmox-par:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jf4x2n5r8t2y6c", "registered": false, "why": "well formed, but this provider is not in the registry"},
+      {"ern": "ern:essingan:arca:mars-base-1:482019375521:o-01jd2v8k4m7q9x3a/p-01jf3w9n5r8t2y6b/instance/db-01jg4x8n5r8t2y6b", "registered": false, "why": "from essingan-iam #129: the registry, not the parser, refuses an unknown provider (ADR-0051 D7)"},
       {"ern": "ern:essingan:iam::482019375521:user/u-01jcz7k2m9q4x8n2", "registered": true, "why": "no location, so no provider to check"}
     ]
   },
