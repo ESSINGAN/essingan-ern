@@ -135,8 +135,8 @@ func (e ERN) classify() (Pattern, error) {
 		}
 		return E10, nil
 	}
-	if isPrefixedERI(segs[0], "o") {
-		if len(segs) > 1 && isPrefixedERI(segs[1], "p") {
+	if IsERIOf("o", segs[0]) {
+		if len(segs) > 1 && IsERIOf("p", segs[1]) {
 			return e.classifyInProject(segs[2:])
 		}
 		return e.classifyInOrganization(segs[1:])
@@ -176,7 +176,7 @@ func (e ERN) classifyInAccount(segs []string) (Pattern, error) {
 	if e.Service == "account" {
 		switch segs[0] {
 		case "organization":
-			if !isPrefixedERI(segs[1], "o") {
+			if !IsERIOf("o", segs[1]) {
 				return "", invalid("%q is not an organization id", segs[1])
 			}
 			return E3, nil
@@ -195,7 +195,7 @@ func (e ERN) classifyInOrganization(segs []string) (Pattern, error) {
 		return "", invalid("path %q is not o-…/<type>/<id>", e.Path)
 	}
 	if e.Service == "account" && segs[0] == "project" {
-		if !isPrefixedERI(segs[1], "p") {
+		if !IsERIOf("p", segs[1]) {
 			return "", invalid("%q is not a project id", segs[1])
 		}
 		return E5, nil
@@ -222,11 +222,11 @@ func isRoleSession(segs []string) bool {
 	switch len(segs) {
 	case 3:
 	case 4:
-		if !isPrefixedERI(segs[0], "o") {
+		if !IsERIOf("o", segs[0]) {
 			return false
 		}
 	case 5:
-		if !isPrefixedERI(segs[0], "o") || !isPrefixedERI(segs[1], "p") {
+		if !IsERIOf("o", segs[0]) || !IsERIOf("p", segs[1]) {
 			return false
 		}
 	default:
@@ -274,7 +274,7 @@ func validateLocation(loc string) error {
 		return invalid("bad location %q", loc)
 	}
 	if provider == "lithos" {
-		if !isPrefixedERI(region, "s") {
+		if !IsERIOf("s", region) {
 			return invalid("bad Lithos site in location %q", loc)
 		}
 		return nil

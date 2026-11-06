@@ -152,6 +152,17 @@
     {"prefix": "cap", "unix_ms": 0, "random": 0, "eri": "cap-0000000000000000", "why": "the Unix epoch"},
     {"prefix": "ldb", "unix_ms": 281474976710655, "random": 1073741823, "eri": "ldb-7zzzzzzzzzzzzzzz", "why": "the 48-bit limit"}
   ],
+  "derived_eri": [
+    {"prefix": "u", "unix_ms": 1790850600000, "seed": "acme/alice", "eri": "u-01m3vg7320s12kww", "why": "the same object always gets the same ERI"},
+    {"prefix": "u", "unix_ms": 1790850600000, "seed": "acme/bob", "eri": "u-01m3vg7320fgjh6e", "why": "another seed at the same time gives another ERI"},
+    {"prefix": "g", "unix_ms": 1793956800000, "seed": "482019375521/admins", "eri": "g-01m6r2gsg0jkswny"},
+    {"prefix": "u", "unix_ms": -62135596800000, "seed": "acme/alice", "eri": "u-0000000000s12kww", "why": "a zero time (year 1) counts as the Unix epoch"}
+  ],
+  "display_account_ids": [
+    {"id": "482019375521", "display": "4820-1937-5521"},
+    {"id": "4820-1937-5521", "display": "", "why": "already formatted: not an account ID"},
+    {"id": "acme", "display": ""}
+  ],
   "lifecycle_states": ["PENDING", "CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"],
   "bad_lifecycle_states": ["", "active", "RUNNING", "CREATED", "DELETED "],
   "bad_patterns": [

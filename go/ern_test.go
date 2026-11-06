@@ -54,6 +54,16 @@ type vectors struct {
 		Random uint32 `json:"random"`
 		ERI    string `json:"eri"`
 	} `json:"eri"`
+	DerivedERI []struct {
+		Prefix string `json:"prefix"`
+		UnixMs int64  `json:"unix_ms"`
+		Seed   string `json:"seed"`
+		ERI    string `json:"eri"`
+	} `json:"derived_eri"`
+	DisplayAccountIDs []struct {
+		ID      string `json:"id"`
+		Display string `json:"display"`
+	} `json:"display_account_ids"`
 	LifecycleStates    []string `json:"lifecycle_states"`
 	BadLifecycleStates []string `json:"bad_lifecycle_states"`
 }

@@ -55,7 +55,7 @@ func TestNewERI(t *testing.T) {
 		t.Fatal(err)
 	}
 	after := time.Now()
-	if !isPrefixedERI(id, "p") {
+	if !IsERIOf("p", id) {
 		t.Fatalf("NewERI(p) = %q, not a p- ERI", id)
 	}
 	at, err := ERITime(id)
@@ -136,5 +136,42 @@ func TestERITimeRefusesBadInput(t *testing.T) {
 		if _, err := ERITime(id); !errors.Is(err, ErrInvalid) {
 			t.Errorf("ERITime(%q): %v, want ErrInvalid", id, err)
 		}
+	}
+}
+
+func TestVectorsDerivedERI(t *testing.T) {
+	cases := loadVectors(t).DerivedERI
+	if len(cases) == 0 {
+		t.Fatal("no derived ERI vectors")
+	}
+	for _, c := range cases {
+		got, err := DeriveERI(c.Prefix, time.UnixMilli(c.UnixMs), c.Seed)
+		if err != nil || got != c.ERI {
+			t.Errorf("DeriveERI(%q, %d, %q) = %q, %v, want %q", c.Prefix, c.UnixMs, c.Seed, got, err, c.ERI)
+		}
+	}
+	if got, err := DeriveERI("u", time.Time{}, "acme/alice"); err != nil || got != "u-0000000000s12kww" {
+		t.Errorf("DeriveERI with the zero time = %q, %v", got, err)
+	}
+	if _, err := DeriveERI("User", time.Now(), "x"); !errors.Is(err, ErrInvalid) {
+		t.Errorf("DeriveERI with a bad prefix: %v, want ErrInvalid", err)
+	}
+}
+
+func TestVectorsDisplayAccountID(t *testing.T) {
+	cases := loadVectors(t).DisplayAccountIDs
+	if len(cases) == 0 {
+		t.Fatal("no display vectors")
+	}
+	for _, c := range cases {
+		if got := DisplayAccountID(c.ID); got != c.Display {
+			t.Errorf("DisplayAccountID(%q) = %q, want %q", c.ID, got, c.Display)
+		}
+	}
+}
+
+func TestIsERIOf(t *testing.T) {
+	if !IsERIOf("o", org) || IsERIOf("p", org) || IsERIOf("o", "o-") {
+		t.Error("IsERIOf")
 	}
 }

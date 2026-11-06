@@ -2,6 +2,7 @@ package ern
 
 import (
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/binary"
 	"regexp"
 	"strings"
@@ -41,6 +42,24 @@ func NewERI(prefix string) (string, error) {
 	var b [4]byte
 	_, _ = rand.Read(b[:]) // crypto/rand.Read never returns an error
 	return makeERI(prefix, time.Now(), binary.BigEndian.Uint32(b[:]))
+}
+
+// DeriveERI returns the ERI of an object that already exists elsewhere under
+// another stable id (seed), created at createdAt: the same inputs always give
+// the same ERI, so nothing has to be stored to name it. The 6 last characters
+// come from SHA-256(prefix, NUL, seed) instead of chance. A zero or pre-1970
+// createdAt counts as the Unix epoch. Same formula as essingan-iam #129.
+func DeriveERI(prefix string, createdAt time.Time, seed string) (string, error) {
+	if createdAt.Before(time.Unix(0, 0)) {
+		createdAt = time.Unix(0, 0)
+	}
+	sum := sha256.Sum256([]byte(prefix + "\x00" + seed))
+	return makeERI(prefix, createdAt, binary.BigEndian.Uint32(sum[:4])>>2)
+}
+
+// IsERIOf reports whether s is an ERI with the given prefix, such as "p".
+func IsERIOf(prefix, s string) bool {
+	return IsERI(s) && strings.HasPrefix(s, prefix+"-")
 }
 
 // ERITime returns the creation time held in an ERI, to the millisecond.
@@ -95,6 +114,11 @@ func ValidateAccountID(id string) error {
 	return nil
 }
 
-func isPrefixedERI(s, prefix string) bool {
-	return IsERI(s) && strings.HasPrefix(s, prefix+"-")
+// DisplayAccountID formats an account ID for people, as 4820-1937-5521. It
+// returns "" for anything else than 12 digits.
+func DisplayAccountID(id string) string {
+	if ValidateAccountID(id) != nil {
+		return ""
+	}
+	return id[:4] + "-" + id[4:8] + "-" + id[8:]
 }
