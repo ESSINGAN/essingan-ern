@@ -10,6 +10,7 @@ La bibliothèque Go des **ERN** (ESSINGAN Resource Name), les noms uniques des r
 
 | Fonction | Exemple | Rôle |
 |---|---|---|
+| Créer un identifiant | `ern.NewERI("p")` | Crée l'identifiant d'une nouvelle ressource, ex. `p-01m6r2gsg13nqk8n` |
 | Fabriquer | `ern.NewProject(compte, org, projet)` | Crée le nom d'une ressource, ou renvoie une erreur |
 | Lire | `ern.Parse(texte)` | Découpe un nom en morceaux |
 | Valider | `e.Validate()`, `ern.IsERI(id)` | Refuse un nom mal formé |
@@ -25,6 +26,24 @@ ok, err := ern.Match("ern:essingan:account::482019375521:o-01jd2v8k4m7q9x3a/proj
 ```
 
 Si `Match` renvoie une erreur, la règle ou le nom est invalide : l'appelant doit refuser l'accès.
+
+## Les identifiants (ERI)
+
+Un ERI, c'est un préfixe de 1 à 4 lettres, un tiret, puis 16 caractères :
+
+```
+p-01m6r2gsg0 13nqk8n
+  └─ 10 ──┘ └─ 6 ─┘
+   la date   tirés au hasard
+   (à la ms)
+```
+
+- **Les 10 premiers** viennent d'un ULID : l'heure de création, à la milliseconde.
+- **Les 6 suivants** sont tirés au hasard.
+- **Alphabet :** base32 de Crockford en minuscules, sans `i`, `l`, `o` ni `u`.
+- **Triés par date :** trier les ERI comme du texte les range par date de création. La base peut donc lister et paginer dans l'ordre sans colonne de plus. Deux ERI créés dans la même milliseconde restent dans un ordre au hasard.
+- **Index unique :** les 6 caractères au hasard rendent un doublon très peu probable, mais pas impossible. La table garde donc un index unique sur l'ERI.
+- `ern.ERITime(id)` relit la date de création d'un ERI.
 
 ## Les fournisseurs cloud
 
@@ -46,7 +65,7 @@ La liste n'est pas dans le code : elle vit dans le registre du catalogue (ADR-00
 
 ## Les cas de test communs
 
-`testdata/vectors.json` contient les cas partagés avec la version TypeScript : noms valides, noms invalides, comparaisons, règles invalides, registre des fournisseurs et états de vie. Les deux versions doivent donner les mêmes résultats.
+`testdata/vectors.json` contient les cas partagés avec la version TypeScript : noms valides, noms invalides, comparaisons, règles invalides, registre des fournisseurs, création d'ERI (date + nombre au hasard → ERI attendu) et états de vie. Les deux versions doivent donner les mêmes résultats.
 
 ## Tester
 
@@ -60,7 +79,8 @@ Version locale, pas encore publiée.
 
 **Questions posées au CTO le 5 novembre :**
 - **Le repo définitif :** le chemin du module `github.com/ESSINGAN/essingan-ern` est provisoire.
-- **La création des ERI :** le plan dit « 16 caractères dérivés d'un ULID », sans dire comment. La bibliothèque vérifie donc les ERI, mais n'en fabrique pas.
 - **L'emplacement des cas de test communs.**
+
+**Choix fait le 6 novembre :** les ERI font 16 caractères, comme dans le plan et le contrat : 10 pour la date (ULID) et 6 au hasard. À confirmer au CTO.
 
 **Choix à faire confirmer :** les sous-ressources de niveau compte, comme `user/u-…/mfa-device/mfa-…`, sont acceptées et classées E8. Le contrat les utilise, alors que le Doc 73-01 décrit E8 seulement sur E6 et E7.
