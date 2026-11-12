@@ -55,3 +55,18 @@ func TestMatchRefusesAnOverlongPattern(t *testing.T) {
 		t.Errorf("a pattern over the limit: %v, want ErrInvalid", err)
 	}
 }
+
+// ValidatePattern refuses what Match refuses, and accepts what it reads.
+func TestValidatePattern(t *testing.T) {
+	v := loadVectors(t)
+	for _, c := range v.BadPatterns {
+		if err := ValidatePattern(c.Pattern); !errors.Is(err, ErrInvalid) {
+			t.Errorf("ValidatePattern(%q) = %v, want ErrInvalid (%s)", c.Pattern, err, c.Why)
+		}
+	}
+	for _, c := range v.Match {
+		if err := ValidatePattern(c.Pattern); err != nil {
+			t.Errorf("ValidatePattern(%q) = %v, want nil", c.Pattern, err)
+		}
+	}
+}
