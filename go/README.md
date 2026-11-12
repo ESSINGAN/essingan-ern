@@ -22,6 +22,8 @@ import ern "github.com/ESSINGAN/essingan-ern/go"
 | Valider | `e.Validate()`, `ern.IsERI(id)`, `ern.IsERIOf("p", id)` | Refuse un nom ou un identifiant mal formé |
 | Vérifier le fournisseur | `e.CheckProvider(registre)` | Refuse un fournisseur cloud absent du registre |
 | Comparer | `ern.Match(règle, nom)` | Dit si un nom correspond à une règle de droits |
+| Vérifier une règle | `ern.ValidatePattern(règle)` | Refuse une règle de droits que `Match` ne saurait pas lire, avant de l'enregistrer |
+| Lister les services | `ern.Services()`, `ern.IsService("iam")` | Les espaces de noms (`iam`, `account`, `scu`…), aussi ceux des actions `iam:CreateUser` |
 | Afficher un compte | `ern.DisplayAccountID("482019375521")` | Écrit `4820-1937-5521` pour les personnes |
 
 ```go

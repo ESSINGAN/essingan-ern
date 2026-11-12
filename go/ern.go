@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"slices"
 	"strings"
 )
 
@@ -43,6 +44,20 @@ var services = map[string]bool{
 	"account": true, "iam": true, "sts": true, "billing": true, "scu": true,
 	"spoke": true, "stif": true, "lithos": true, "arca": true, "veloce": true,
 	"specula": true, "sentis": true, "cno": true, "audit": true, "catalogue": true,
+}
+
+// IsService reports whether name is a service namespace of that list. Policy
+// actions (<service>:<Verb><Type>) use the same namespaces.
+func IsService(name string) bool { return services[name] }
+
+// Services returns the service namespaces, sorted.
+func Services() []string {
+	out := make([]string, 0, len(services))
+	for s := range services {
+		out = append(out, s)
+	}
+	slices.Sort(out)
+	return out
 }
 
 var (

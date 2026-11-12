@@ -22,28 +22,14 @@ func Match(pattern, name string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	if len(pattern) > maxLength || !patternRe.MatchString(pattern) {
-		return false, invalid("bad pattern %q", pattern)
+	if err := ValidatePattern(pattern); err != nil {
+		return false, err
 	}
 	if pattern == "*" {
 		return true, nil
 	}
 	parts := strings.SplitN(pattern, ":", 6)
-	if len(parts) != 6 || strings.Contains(parts[5], ":") || parts[5] == "" {
-		return false, invalid("pattern %q does not have 6 components", pattern)
-	}
-	if strings.Contains(strings.Join(parts[:5], ":"), "**") {
-		return false, invalid("** outside the resource path in pattern %q", pattern)
-	}
 	segs := strings.Split(parts[5], "/")
-	for i, s := range segs {
-		if s == "" {
-			return false, invalid("empty segment in pattern %q", pattern)
-		}
-		if strings.Contains(s, "**") && (s != "**" || i != len(segs)-1) {
-			return false, invalid("** is allowed only as the last segment, in pattern %q", pattern)
-		}
-	}
 
 	names := strings.Split(e.Path, "/")
 	if last := len(segs) - 1; segs[last] == "**" {
@@ -67,6 +53,36 @@ func Match(pattern, name string) (bool, error) {
 		}
 	}
 	return true, nil
+}
+
+// ValidatePattern checks a policy pattern the way Match reads it: "*" alone,
+// or six components whose resource path has no empty segment, with "**" only
+// as its whole last segment. A policy store calls it before saving a rule, so
+// a rule Match would refuse is never stored.
+func ValidatePattern(pattern string) error {
+	if len(pattern) > maxLength || !patternRe.MatchString(pattern) {
+		return invalid("bad pattern %q", pattern)
+	}
+	if pattern == "*" {
+		return nil
+	}
+	parts := strings.SplitN(pattern, ":", 6)
+	if len(parts) != 6 || strings.Contains(parts[5], ":") || parts[5] == "" {
+		return invalid("pattern %q does not have 6 components", pattern)
+	}
+	if strings.Contains(strings.Join(parts[:5], ":"), "**") {
+		return invalid("** outside the resource path in pattern %q", pattern)
+	}
+	segs := strings.Split(parts[5], "/")
+	for i, s := range segs {
+		if s == "" {
+			return invalid("empty segment in pattern %q", pattern)
+		}
+		if strings.Contains(s, "**") && (s != "**" || i != len(segs)-1) {
+			return invalid("** is allowed only as the last segment, in pattern %q", pattern)
+		}
+	}
+	return nil
 }
 
 // glob matches one component or segment, in time proportional to

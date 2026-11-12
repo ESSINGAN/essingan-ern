@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 )
@@ -198,5 +199,26 @@ func TestProvider(t *testing.T) {
 		if got := (ERN{Location: location}).Provider(); got != want {
 			t.Errorf("Provider(%q) = %q, want %q", location, got, want)
 		}
+	}
+}
+
+func TestServices(t *testing.T) {
+	list := Services()
+	if len(list) != len(services) || !slices.IsSorted(list) {
+		t.Fatalf("Services() = %v", list)
+	}
+	for _, s := range list {
+		if !IsService(s) {
+			t.Errorf("IsService(%q) = false", s)
+		}
+	}
+	for _, s := range []string{"", "IAM", "s3", "iam "} {
+		if IsService(s) {
+			t.Errorf("IsService(%q) = true", s)
+		}
+	}
+	list[0] = "changed"
+	if Services()[0] == "changed" {
+		t.Error("Services() shares its slice with the caller")
 	}
 }
